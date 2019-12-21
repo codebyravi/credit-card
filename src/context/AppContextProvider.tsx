@@ -1,18 +1,34 @@
 import React from 'react';
 import AppContext from './AppContext';
 
-const AppContextProvider: React.FC = (props) => {
-  const [cardNumber, setCardNumber] = React.useState<string>('');
-  const [holderName, setHolderName] = React.useState<string>('');
+import Months from '../types/months';
+import Years from '../types/years';
 
-  const value = {
-    cardNumber,
-    setCardNumber,
-    holderName,
-    setHolderName,
-  };
+const initialCardNumber = '4537374211388015';
+const initialHolderName = 'Ali Ahmed';
+const initalMonth: Months = '04';
+const initalYear: Years = '2023';
 
-  return <AppContext.Provider value={value}>{props.children}</AppContext.Provider>;
+const AppContextProvider: React.FC = props => {
+	const [cardNumber, setCardNumber] = React.useState<string>(initialCardNumber);
+	const [holderName, setHolderName] = React.useState<string>(initialHolderName);
+	const [month, setMonth] = React.useState<Months>(initalMonth);
+	const [year, setYear] = React.useState<Years>(initalYear);
+
+	const value = {
+		cardNumber,
+		setCardNumber,
+		holderName,
+		setHolderName,
+		month,
+		setMonth,
+		year,
+		setYear
+	};
+
+	return (
+		<AppContext.Provider value={value}>{props.children}</AppContext.Provider>
+	);
 };
 
 export default AppContextProvider;
