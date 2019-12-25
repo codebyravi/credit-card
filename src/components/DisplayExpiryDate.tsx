@@ -12,6 +12,8 @@ const ExpiryDateContainer = styled.div`
 	align-self: center;
 `;
 
+const ExpiryDate = styled.div``;
+
 const DisplayExpiryDate: React.FC<IProps> = ({ month, year }) => {
 	const displayMonth = month === 'Month' ? 'MM' : month;
 	const displayedYear = year === 'Year' ? 'YY' : year.slice(2);
@@ -19,9 +21,9 @@ const DisplayExpiryDate: React.FC<IProps> = ({ month, year }) => {
 	return (
 		<ExpiryDateContainer>
 			<p>Expires on:</p>
-			<p>
+			<ExpiryDate>
 				{displayMonth} / {displayedYear}
-			</p>
+			</ExpiryDate>
 		</ExpiryDateContainer>
 	);
 };

@@ -3,17 +3,56 @@ import AppContext from '../context/AppContext';
 import Months from '../types/months';
 import Years from '../types/years';
 import styled from 'styled-components';
+import { formatCardNumber } from '../utils/utils';
 
 interface IProps {}
 
-type inputNames = 'cardNumber' | 'holderName';
-type selectNames = 'Month' | 'Year';
+type InputNames = 'cardNumber' | 'holderName';
+type SelectNames = 'Month' | 'Year';
 
 const FormContainer = styled.div`
 	margin: 0 auto;
+	padding: 20px 0;
 	width: 100%;
 	border: 1px solid blue;
 	flex-grow: 1;
+	display: flex;
+	justify-content: center;
+`;
+
+const FormItemContainer = styled.div`
+	padding: 10px;
+`;
+
+const StyledLabel = styled.label`
+	font-size: 20px;
+	color: steelblue;
+`;
+
+const StyledInput = styled.input`
+	padding: 10px 15px;
+	color: steelblue;
+	font-size: 20px;
+	outline: none;
+	border: 1px solid steelblue;
+	border-radius: 4px;
+
+	&:focus {
+		border: 1px solid tomato;
+	}
+`;
+
+const StyledSelect = styled.select`
+	padding: 10px 15px;
+	color: steelblue;
+	font-size: 20px;
+	outline: none;
+	border: 1px solid steelblue;
+	border-radius: 4px;
+
+	&:focus {
+		border: 1px solid tomato;
+	}
 `;
 
 const Form: React.FC<IProps> = () => {
@@ -30,9 +69,9 @@ const Form: React.FC<IProps> = () => {
 	return (
 		<FormContainer>
 			<form onSubmit={onFormSubmit}>
-				<div className="form__cardNumber">
-					<label htmlFor="cardNumber">Card Number</label>
-					<input
+				<FormItemContainer>
+					<StyledLabel htmlFor="cardNumber">Card Number</StyledLabel>
+					<StyledInput
 						id="cardNumber"
 						name="cardNumber"
 						type="text"
@@ -40,10 +79,10 @@ const Form: React.FC<IProps> = () => {
 						onChange={handleChange}
 						value={cardNumber}
 					/>
-				</div>
-				<div className="form__holderName">
-					<label htmlFor="holderName">Holder's Name</label>
-					<input
+				</FormItemContainer>
+				<FormItemContainer>
+					<StyledLabel htmlFor="holderName">Holder's Name</StyledLabel>
+					<StyledInput
 						id="holderName"
 						name="holderName"
 						type="text"
@@ -51,10 +90,10 @@ const Form: React.FC<IProps> = () => {
 						onChange={handleChange}
 						value={holderName}
 					/>
-				</div>
-				<div className="form__expirationDate">
-					<label htmlFor="expiryMonth">Expiration Date</label>
-					<select name="Month" value={month} onChange={handleDateChange}>
+				</FormItemContainer>
+				<FormItemContainer>
+					<StyledLabel htmlFor="expiryMonth">Expiration Date</StyledLabel>
+					<StyledSelect name="Month" value={month} onChange={handleDateChange}>
 						<option disabled selected>
 							Month
 						</option>
@@ -70,8 +109,8 @@ const Form: React.FC<IProps> = () => {
 						<option value="10">10</option>
 						<option value="11">11</option>
 						<option value="12">12</option>
-					</select>
-					<select name="Year" value={year} onChange={handleDateChange}>
+					</StyledSelect>
+					<StyledSelect name="Year" value={year} onChange={handleDateChange}>
 						<option selected disabled>
 							Year
 						</option>
@@ -87,19 +126,19 @@ const Form: React.FC<IProps> = () => {
 						<option value="2028">2028</option>
 						<option value="2029">2029</option>
 						<option value="2030">2030</option>
-					</select>
-				</div>
-				<div className="form__cvv">
-					<label htmlFor="cvv">CVV</label>
-					<input id="cvv" type="text" />
-				</div>
+					</StyledSelect>
+				</FormItemContainer>
+				<FormItemContainer>
+					<StyledLabel htmlFor="cvv">CVV</StyledLabel>
+					<StyledInput id="cvv" type="text" />
+				</FormItemContainer>
 			</form>
 		</FormContainer>
 	);
 
 	function handleDateChange(e: React.FormEvent<HTMLSelectElement>) {
 		const { name, value } = e.currentTarget as {
-			name: selectNames;
+			name: SelectNames;
 			value: Months | Years;
 		};
 		if (name === 'Month') {
@@ -111,11 +150,11 @@ const Form: React.FC<IProps> = () => {
 
 	function handleChange(e: React.FormEvent<HTMLInputElement>): void {
 		const { name, value } = e.currentTarget as {
-			name: inputNames;
+			name: InputNames;
 			value: string;
 		};
 		if (name === 'cardNumber') {
-			setCardNumber(value);
+			setCardNumber(prev => formatCardNumber(prev, value));
 		} else if (name === 'holderName') {
 			setHolderName(value);
 		}

@@ -4,7 +4,7 @@ import AppContext from './AppContext';
 import Months from '../types/months';
 import Years from '../types/years';
 
-const initialCardNumber = '4537374211388015';
+const initialCardNumber = '';
 const initialHolderName = 'Ali Ahmed';
 const initalMonth: Months = '04';
 const initalYear: Years = '2023';
