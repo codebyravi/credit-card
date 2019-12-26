@@ -1,4 +1,4 @@
-import { formatCardNumber } from "./utils";
+import { formatCardNumber, formatDisplayedNumber } from "./utils";
 
 describe('Test formatCardNumber', () => {
 
@@ -62,8 +62,25 @@ describe('Test formatCardNumber', () => {
 		expect(res).toBe(prev);
 	});
 
+});
 
+describe('Test formatDisplayedNumber', () => {
+	test('should display card number correctly', () => {
+		const cardNumber = '1234 56';
+		const res = formatDisplayedNumber(cardNumber);
+		expect(res).toBe('1234 56** **** ****');
+	});
 
+	test('should display full card Number correctly', () => {
+		const cardNumber = '1234 1234 1234 1234';
+		const res = formatDisplayedNumber(cardNumber);
+		expect(res).toBe(cardNumber);
+	});
 
+	test('should display default displayedCardNumber correctly', () => {
+		const cardNumber = '';
+		const res = formatDisplayedNumber(cardNumber);
+		expect(res).toBe('**** **** **** ****');
+	});
 
-})
+});

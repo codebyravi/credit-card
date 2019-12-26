@@ -75,7 +75,7 @@ const Form: React.FC<IProps> = () => {
 						id="cardNumber"
 						name="cardNumber"
 						type="text"
-						placeholder="Card Number"
+						placeholder="xxxx xxxx xxxx xxxx"
 						onChange={handleChange}
 						value={cardNumber}
 					/>
@@ -86,7 +86,7 @@ const Form: React.FC<IProps> = () => {
 						id="holderName"
 						name="holderName"
 						type="text"
-						placeholder="Holder's Name"
+						placeholder="Your name"
 						onChange={handleChange}
 						value={holderName}
 					/>

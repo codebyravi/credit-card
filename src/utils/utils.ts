@@ -23,6 +23,11 @@ export const formatCardNumber = (prev: string, current: string): string => {
 	return current;
 }
 
+export const formatDisplayedNumber = (cardNumber: string): string => {
+	const defaultDisplay = '**** **** **** ****';
+	return cardNumber + defaultDisplay.slice(cardNumber.length);
+}
+
 export function isWhiteSpace(str: string): boolean {
 	return /[\s]/.test(str);
 }
