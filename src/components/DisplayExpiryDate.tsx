@@ -1,26 +1,35 @@
 import React from 'react';
-import Months from '../types/months';
-import Years from '../types/years';
 import styled from 'styled-components';
 
 interface IProps {
-	month: Months;
-	year: Years;
+	month: string;
+	year: string;
 }
 
 const ExpiryDateContainer = styled.div`
 	align-self: center;
+	grid-column: 2 / -1;
+	grid-row: 3 / -1;
+	justify-self: end;
+	align-self: center;
 `;
 
-const ExpiryDate = styled.div``;
+const StyledLabel = styled.p`
+	text-align: center;
+	margin-bottom: 4px;
+`;
+
+const ExpiryDate = styled.div`
+	text-align: center;
+`;
 
 const DisplayExpiryDate: React.FC<IProps> = ({ month, year }) => {
-	const displayMonth = month === 'Month' ? 'MM' : month;
-	const displayedYear = year === 'Year' ? 'YY' : year.slice(2);
+	const displayMonth = month.padEnd(2, '*');
+	const displayedYear = year.padEnd(2, '*');
 
 	return (
 		<ExpiryDateContainer>
-			<p>Expires on:</p>
+			<StyledLabel>Valid thru:</StyledLabel>
 			<ExpiryDate>
 				{displayMonth} / {displayedYear}
 			</ExpiryDate>

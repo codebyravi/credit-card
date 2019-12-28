@@ -5,7 +5,12 @@ interface IProps {
 	cardNumber: string;
 }
 
-const CardNumberContainer = styled.div``;
+const CardNumberContainer = styled.div`
+	grid-column: 1 / -1;
+	grid-row: 2 / 3;
+	align-self: end;
+	margin-bottom: 10px;
+`;
 
 const CardNumberText = styled.div`
 	font-size: 25px;

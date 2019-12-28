@@ -1,18 +1,18 @@
 import React from 'react';
-import Months from '../types/months';
-import Years from '../types/years';
 
 interface IAppContext {
 	cardNumber: string;
 	holderName: string;
-	month: Months;
-	year: Years;
+	month: string;
+	year: string;
+	validThru: string;
 	displayedCardNumber: string;
 	displayedName: string;
+	setValidThru: React.Dispatch<React.SetStateAction<string>>;
 	setCardNumber: React.Dispatch<React.SetStateAction<string>>;
 	setHolderName: React.Dispatch<React.SetStateAction<string>>;
-	setMonth: React.Dispatch<React.SetStateAction<Months>>;
-	setYear: React.Dispatch<React.SetStateAction<Years>>;
+	setMonth: React.Dispatch<React.SetStateAction<string>>;
+	setYear: React.Dispatch<React.SetStateAction<string>>;
 	setDisplayedCardNumber: React.Dispatch<React.SetStateAction<string>>;
 	setDisplayedName: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -20,8 +20,8 @@ interface IAppContext {
 const initialContext: IAppContext = {
 	cardNumber: '',
 	holderName: '',
-	month: 'Month',
-	year: 'Year',
+	month: 'MM',
+	year: 'YY',
 	setCardNumber: () => {},
 	setHolderName: () => {},
 	setMonth: () => {},
@@ -29,7 +29,9 @@ const initialContext: IAppContext = {
 	displayedCardNumber: '',
 	setDisplayedCardNumber: () => {},
 	displayedName: '',
-	setDisplayedName: () => {}
+	setDisplayedName: () => {},
+	validThru: '',
+	setValidThru: () => {}
 };
 
 const AppContext = React.createContext<IAppContext>(initialContext);

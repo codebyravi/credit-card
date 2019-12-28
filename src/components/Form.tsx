@@ -1,14 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppContext from '../context/AppContext';
-import Months from '../types/months';
-import Years from '../types/years';
 import styled from 'styled-components';
-import { formatCardNumber } from '../utils/utils';
+import { formatCardNumber, formatValidThru } from '../utils/utils';
 
 interface IProps {}
 
 type InputNames = 'cardNumber' | 'holderName';
-type SelectNames = 'Month' | 'Year';
 
 const FormContainer = styled.div`
 	margin: 0 auto;
@@ -37,22 +34,15 @@ const StyledInput = styled.input`
 	border: 1px solid steelblue;
 	border-radius: 4px;
 
+	max-width: 300px;
+
 	&:focus {
 		border: 1px solid tomato;
 	}
 `;
 
-const StyledSelect = styled.select`
-	padding: 10px 15px;
-	color: steelblue;
-	font-size: 20px;
-	outline: none;
-	border: 1px solid steelblue;
-	border-radius: 4px;
-
-	&:focus {
-		border: 1px solid tomato;
-	}
+const StyledInputSmall = styled(StyledInput)`
+	max-width: 110px;
 `;
 
 const Form: React.FC<IProps> = () => {
@@ -61,11 +51,10 @@ const Form: React.FC<IProps> = () => {
 		setCardNumber,
 		holderName,
 		setHolderName,
-		month,
-		setMonth,
-		year,
-		setYear
+		validThru,
+		setValidThru
 	} = React.useContext(AppContext);
+
 	return (
 		<FormContainer>
 			<form onSubmit={onFormSubmit}>
@@ -75,7 +64,7 @@ const Form: React.FC<IProps> = () => {
 						id="cardNumber"
 						name="cardNumber"
 						type="text"
-						placeholder="xxxx xxxx xxxx xxxx"
+						placeholder="1234 1234 1234 1234"
 						onChange={handleChange}
 						value={cardNumber}
 					/>
@@ -93,59 +82,26 @@ const Form: React.FC<IProps> = () => {
 				</FormItemContainer>
 				<FormItemContainer>
 					<StyledLabel htmlFor="expiryMonth">Expiration Date</StyledLabel>
-					<StyledSelect name="Month" value={month} onChange={handleDateChange}>
-						<option disabled selected>
-							Month
-						</option>
-						<option value="01">01</option>
-						<option value="02">02</option>
-						<option value="03">03</option>
-						<option value="04">04</option>
-						<option value="05">05</option>
-						<option value="06">06</option>
-						<option value="07">07</option>
-						<option value="08">08</option>
-						<option value="09">09</option>
-						<option value="10">10</option>
-						<option value="11">11</option>
-						<option value="12">12</option>
-					</StyledSelect>
-					<StyledSelect name="Year" value={year} onChange={handleDateChange}>
-						<option selected disabled>
-							Year
-						</option>
-						<option value="2019">2019</option>
-						<option value="2020">2020</option>
-						<option value="2021">2021</option>
-						<option value="2022">2022</option>
-						<option value="2023">2023</option>
-						<option value="2024">2024</option>
-						<option value="2025">2025</option>
-						<option value="2026">2026</option>
-						<option value="2027">2027</option>
-						<option value="2028">2028</option>
-						<option value="2029">2029</option>
-						<option value="2030">2030</option>
-					</StyledSelect>
+					<StyledInputSmall
+						id="expiryMonth"
+						name="expiryMonth"
+						type="text"
+						placeholder="MM / YY"
+						onChange={handleValidThru}
+						value={validThru}
+					/>
 				</FormItemContainer>
 				<FormItemContainer>
 					<StyledLabel htmlFor="cvv">CVV</StyledLabel>
-					<StyledInput id="cvv" type="text" />
+					<StyledInputSmall id="cvv" type="text" placeholder="XXX" />
 				</FormItemContainer>
 			</form>
 		</FormContainer>
 	);
 
-	function handleDateChange(e: React.FormEvent<HTMLSelectElement>) {
-		const { name, value } = e.currentTarget as {
-			name: SelectNames;
-			value: Months | Years;
-		};
-		if (name === 'Month') {
-			setMonth(value as Months);
-		} else if (name === 'Year') {
-			setYear(value as Years);
-		}
+	function handleValidThru(e: React.FormEvent<HTMLInputElement>) {
+		const { value } = e.currentTarget;
+		setValidThru(prev => formatValidThru(prev, value));
 	}
 
 	function handleChange(e: React.FormEvent<HTMLInputElement>): void {

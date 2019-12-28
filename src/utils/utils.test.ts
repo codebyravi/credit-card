@@ -1,4 +1,4 @@
-import { formatCardNumber, formatDisplayedNumber } from "./utils";
+import { formatCardNumber, formatDisplayedNumber, formatValidThru } from "./utils";
 
 describe('Test formatCardNumber', () => {
 
@@ -84,3 +84,24 @@ describe('Test formatDisplayedNumber', () => {
 	});
 
 });
+
+describe('Test formatValidThru', () => {
+
+	const divider = ' / ';
+
+	test('should add the divider after two digits', () => {
+		const prev = '1';
+		const curr = '12';
+		const res = formatValidThru(prev, curr);
+		expect(res).toBe(curr + divider);
+	});
+
+	test('should remove the divider adter year is removed', () => {
+		const prev = '04' + divider + '2';
+		const curr = '04' + divider;
+		const res = formatValidThru(prev, curr);
+		expect(res).toBe('04');
+	})
+
+
+})

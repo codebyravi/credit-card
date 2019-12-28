@@ -1,25 +1,63 @@
-import { init, last } from 'ramda';
+import { init, last, take } from 'ramda';
+
+export const formatValidThru = (prev: string, curr: string): string => {
+	let c = curr.length;
+	let p = prev.length;
+
+	const initCurrent = init(curr);
+	const lastCurrent = last(curr);
+
+	if (isAlpha(lastCurrent)) return prev;
+
+	if (curr !== '' && curr.trim() === '') {
+		return prev;
+	}
+
+	if (c > 7) return prev;
+
+	if (c > p) {
+		if (p === 1) {
+			return curr.concat(' / ');
+		}
+	} else if (c < p) {
+		if (c === 5) {
+			return take(2, curr);
+		}
+	}
+	return curr;
+}
 
 export const formatCardNumber = (prev: string, current: string): string => {
 	let c = current.length;
 	let p = prev.length;
 
-	if (isAlpha(last(current))) return prev;
+	const initCurrent = init(current);
+	const lastCurrent = last(current);
+
+	if (isAlpha(lastCurrent)) return prev;
 
 	if (c > 19) {
 		return prev;
 	}
+
+	if (current !== '' && current.trim() === '') {
+		return prev;
+	}
+
 	if (c > p) {
 		if (p === 3 || p === 8 || p === 13) {
-			return current + " ";
+			return current + ' ';
+		} else if (p === 4 || p === 9 || p === 14) {
+			return initCurrent + ' ' + lastCurrent;
 		} else {
 			return current;
 		}
-	} else if (p > c) {
+	} else if (c < p) {
 		if (p === 6 || p === 11 || p === 16) {
-			return init(current);
+			return initCurrent;
 		}
 	}
+
 	return current;
 }
 

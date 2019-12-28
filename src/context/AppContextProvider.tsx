@@ -1,21 +1,21 @@
 import React from 'react';
 import AppContext from './AppContext';
 
-import Months from '../types/months';
-import Years from '../types/years';
 import { formatDisplayedNumber } from '../utils/utils';
 
 const initialCardNumber = '';
 const initialDisplayedName = 'Your Name here';
-const initalMonth: Months = '04';
-const initalYear: Years = '2023';
+const initalMonth = '';
+const initalYear = '';
 const initialDisplayed = '**** **** **** ****';
 
 const AppContextProvider: React.FC = props => {
 	const [cardNumber, setCardNumber] = React.useState<string>(initialCardNumber);
 	const [holderName, setHolderName] = React.useState<string>('');
-	const [month, setMonth] = React.useState<Months>(initalMonth);
-	const [year, setYear] = React.useState<Years>(initalYear);
+	const [month, setMonth] = React.useState<string>(initalMonth);
+	const [year, setYear] = React.useState<string>(initalYear);
+	const [validThru, setValidThru] = React.useState<string>('');
+
 	const [displayedCardNumber, setDisplayedCardNumber] = React.useState(
 		initialDisplayed
 	);
@@ -35,7 +35,9 @@ const AppContextProvider: React.FC = props => {
 		displayedCardNumber,
 		setDisplayedCardNumber,
 		displayedName,
-		setDisplayedName
+		setDisplayedName,
+		validThru,
+		setValidThru
 	};
 
 	React.useEffect(() => {
@@ -49,6 +51,12 @@ const AppContextProvider: React.FC = props => {
 			setDisplayedName(holderName);
 		}
 	}, [holderName]);
+
+	React.useEffect(() => {
+		const [month, year = ''] = validThru.split(' / ');
+		setMonth(month);
+		setYear(year);
+	}, [validThru]);
 
 	return (
 		<AppContext.Provider value={value}>{props.children}</AppContext.Provider>
