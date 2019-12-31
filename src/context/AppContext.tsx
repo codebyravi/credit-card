@@ -15,6 +15,8 @@ interface IAppContext {
 	setYear: React.Dispatch<React.SetStateAction<string>>;
 	setDisplayedCardNumber: React.Dispatch<React.SetStateAction<string>>;
 	setDisplayedName: React.Dispatch<React.SetStateAction<string>>;
+	focusedInput: string | null;
+	setFocusedInput: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const initialContext: IAppContext = {
@@ -31,7 +33,9 @@ const initialContext: IAppContext = {
 	displayedName: '',
 	setDisplayedName: () => {},
 	validThru: '',
-	setValidThru: () => {}
+	setValidThru: () => {},
+	focusedInput: null,
+	setFocusedInput: () => {}
 };
 
 const AppContext = React.createContext<IAppContext>(initialContext);

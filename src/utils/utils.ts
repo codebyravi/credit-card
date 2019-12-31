@@ -4,7 +4,6 @@ export const formatValidThru = (prev: string, curr: string): string => {
 	let c = curr.length;
 	let p = prev.length;
 
-	const initCurrent = init(curr);
 	const lastCurrent = last(curr);
 
 	if (isAlpha(lastCurrent)) return prev;

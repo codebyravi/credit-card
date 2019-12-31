@@ -3,6 +3,11 @@ import styled from 'styled-components';
 
 interface IProps {
 	cardNumber: string;
+	focusedInput: string | null;
+}
+
+interface CNTProps {
+	focusedInput: string | null;
 }
 
 const CardNumberContainer = styled.div`
@@ -14,13 +19,14 @@ const CardNumberContainer = styled.div`
 
 const CardNumberText = styled.div`
 	font-size: 25px;
-	color: silver;
+	color: ${(props: CNTProps) =>
+		props.focusedInput === 'cardNumber' ? 'white' : 'silver'};
 `;
 
-const CardNumber: React.FC<IProps> = ({ cardNumber }) => {
+const CardNumber: React.FC<IProps> = ({ cardNumber, focusedInput }) => {
 	return (
 		<CardNumberContainer>
-			<CardNumberText>{cardNumber}</CardNumberText>
+			<CardNumberText focusedInput={focusedInput}>{cardNumber}</CardNumberText>
 		</CardNumberContainer>
 	);
 };

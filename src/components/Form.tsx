@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AppContext from '../context/AppContext';
 import styled from 'styled-components';
 import { formatCardNumber, formatValidThru } from '../utils/utils';
@@ -52,7 +52,8 @@ const Form: React.FC<IProps> = () => {
 		holderName,
 		setHolderName,
 		validThru,
-		setValidThru
+		setValidThru,
+		setFocusedInput
 	} = React.useContext(AppContext);
 
 	return (
@@ -67,6 +68,8 @@ const Form: React.FC<IProps> = () => {
 						placeholder="1234 1234 1234 1234"
 						onChange={handleChange}
 						value={cardNumber}
+						onFocus={onInputFocus}
+						onBlur={onInputBlur}
 					/>
 				</FormItemContainer>
 				<FormItemContainer>
@@ -78,26 +81,45 @@ const Form: React.FC<IProps> = () => {
 						placeholder="Your name"
 						onChange={handleChange}
 						value={holderName}
+						onFocus={onInputFocus}
+						onBlur={onInputBlur}
 					/>
 				</FormItemContainer>
 				<FormItemContainer>
 					<StyledLabel htmlFor="expiryMonth">Expiration Date</StyledLabel>
 					<StyledInputSmall
-						id="expiryMonth"
+						id="validThru"
 						name="expiryMonth"
 						type="text"
 						placeholder="MM / YY"
 						onChange={handleValidThru}
 						value={validThru}
+						onFocus={onInputFocus}
+						onBlur={onInputBlur}
 					/>
 				</FormItemContainer>
 				<FormItemContainer>
 					<StyledLabel htmlFor="cvv">CVV</StyledLabel>
-					<StyledInputSmall id="cvv" type="text" placeholder="XXX" />
+					<StyledInputSmall
+						id="cvv"
+						type="text"
+						placeholder="XXX"
+						onFocus={onInputFocus}
+						onBlur={onInputBlur}
+					/>
 				</FormItemContainer>
 			</form>
 		</FormContainer>
 	);
+
+	function onInputFocus(e: React.FocusEvent<HTMLInputElement>) {
+		const { id } = e.currentTarget;
+		setFocusedInput(id);
+	}
+
+	function onInputBlur() {
+		setFocusedInput(null);
+	}
 
 	function handleValidThru(e: React.FormEvent<HTMLInputElement>) {
 		const { value } = e.currentTarget;

@@ -5,6 +5,10 @@ import styled from 'styled-components';
 import CardNumber from './CardNumber';
 import image from '../assets/chip2.png';
 
+interface DisplayedNameProps {
+	focusedInput: string | null;
+}
+
 const CardBody = styled.div`
 	margin: 0 auto 20px;
 	width: 400px;
@@ -33,20 +37,34 @@ const DisplayedName = styled.div`
 	grid-row: 3 / -1;
 	justify-self: start;
 	align-self: center;
+
+	color: ${(props: DisplayedNameProps) =>
+		props.focusedInput === 'holderName' ? 'white' : 'silver'};
 `;
 
 const Card: React.FC = () => {
-	const { displayedCardNumber, displayedName, month, year } = React.useContext(
-		AppContext
-	);
+	const {
+		displayedCardNumber,
+		displayedName,
+		month,
+		year,
+		focusedInput
+	} = React.useContext(AppContext);
 	return (
 		<CardBody>
 			<Chip />
-			<CardNumber cardNumber={displayedCardNumber} />
-			<DisplayedName>
+			<CardNumber
+				cardNumber={displayedCardNumber}
+				focusedInput={focusedInput}
+			/>
+			<DisplayedName focusedInput={focusedInput}>
 				<p>{displayedName}</p>
 			</DisplayedName>
-			<DisplayExpiryDate month={month} year={year} />
+			<DisplayExpiryDate
+				month={month}
+				year={year}
+				focusedInput={focusedInput}
+			/>
 		</CardBody>
 	);
 };
