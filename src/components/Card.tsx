@@ -7,6 +7,7 @@ import image from '../assets/chip2.png';
 
 interface DisplayedNameProps {
 	focusedInput: string | null;
+	'data-testid': string;
 }
 
 const CardBody = styled.div`
@@ -57,7 +58,7 @@ const Card: React.FC = () => {
 				cardNumber={displayedCardNumber}
 				focusedInput={focusedInput}
 			/>
-			<DisplayedName focusedInput={focusedInput}>
+			<DisplayedName data-testid="holderName" focusedInput={focusedInput}>
 				<p>{displayedName}</p>
 			</DisplayedName>
 			<DisplayExpiryDate

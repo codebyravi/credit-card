@@ -8,6 +8,7 @@ interface IProps {
 
 interface CNTProps {
 	focusedInput: string | null;
+	'data-testid': string;
 }
 
 const CardNumberContainer = styled.div`
@@ -26,7 +27,12 @@ const CardNumberText = styled.div`
 const CardNumber: React.FC<IProps> = ({ cardNumber, focusedInput }) => {
 	return (
 		<CardNumberContainer>
-			<CardNumberText focusedInput={focusedInput}>{cardNumber}</CardNumberText>
+			<CardNumberText
+				data-testid="cardNumberDisplay"
+				focusedInput={focusedInput}
+			>
+				{cardNumber}
+			</CardNumberText>
 		</CardNumberContainer>
 	);
 };
